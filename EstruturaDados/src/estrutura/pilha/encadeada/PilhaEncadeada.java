@@ -7,12 +7,12 @@ import estrutura.pilha.EPilhaVazia;
 public class PilhaEncadeada implements Pilha{
 	private int tam;
 	private No tos;
-	
+
 	public PilhaEncadeada() {
 		tam = 0;
 		tos = null;
 	}
-	
+
 	@Override
 	public int size() {
 		return tam;
@@ -50,6 +50,6 @@ public class PilhaEncadeada implements Pilha{
 		tam--;
 		return otemp;
 	}
-	
+
 
 }

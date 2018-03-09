@@ -5,7 +5,7 @@ import estrutura.listaLigada.No;
 import estrutura.fila.EFilaVazia;
 
 public class FilaEncadeada implements Fila{
-	
+
 	private No i;
 	private No f;
 	private int tam;
@@ -15,7 +15,7 @@ public class FilaEncadeada implements Fila{
 		f = null;
 		tam = 0;
 	}
-	
+
 	@Override
 	public int tamanho() {
 		return tam;
@@ -59,6 +59,6 @@ public class FilaEncadeada implements Fila{
 		tam--;
 		return out;
 	}
-	
+
 
 }

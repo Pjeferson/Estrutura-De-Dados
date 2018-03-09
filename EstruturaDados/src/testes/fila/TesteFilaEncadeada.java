@@ -1,5 +1,6 @@
 package testes.fila;
 
+import estrutura.fila.EFilaVazia;
 import estrutura.fila.encadeada.FilaEncadeada;
 
 public class TesteFilaEncadeada {
@@ -11,9 +12,13 @@ public class TesteFilaEncadeada {
 		}
 		System.out.println("Tamanho: "+fila.tamanho());
 		System.out.println("==================");
-		int timeEnd = 15;
+		int timeEnd = 16;
 		while(timeEnd-- > 0){
+			try{
 			System.out.println(fila.desenfileirar());
+		} catch (EFilaVazia e){
+			System.out.println(e.getMessage());	
+		}
 		}
 	}
 }

@@ -1,5 +1,6 @@
 package testes.pilha;
 
+import estrutura.pilha.EPilhaVazia;
 import estrutura.pilha.encadeada.PilhaEncadeada;
 
 public class TestePilhaEncadeada {
@@ -11,9 +12,13 @@ public class TestePilhaEncadeada {
 		}
 		System.out.println("Tamanho: "+pilha.size());
 		System.out.println("==================");
-		int timeEnd = 15;
+		int timeEnd = 16;
 		while(timeEnd-- > 0){
-			System.out.println(pilha.pop());
+			try {
+				System.out.println(pilha.pop());
+			} catch (EPilhaVazia e){
+				System.out.println(e.getMessage());	
+			}
 		}
 	}
 }

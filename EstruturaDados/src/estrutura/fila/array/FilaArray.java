@@ -19,6 +19,12 @@ public class FilaArray implements Fila {
 			this.c = c;
 		}
 	}
+	/*public void mostrar() {
+		for (int i = 0; i < q.length; i++) {
+			System.out.print("["+q[i]+"] ");
+		}
+		System.out.print("\n");
+	}*/
 	public int tamanho() {
 		return (q.length -i+f)%q.length;
 	}
