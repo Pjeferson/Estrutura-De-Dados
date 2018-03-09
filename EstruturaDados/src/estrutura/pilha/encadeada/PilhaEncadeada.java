@@ -46,7 +46,9 @@ public class PilhaEncadeada implements Pilha{
 			throw new EPilhaVazia("Pilha vazia");
 		}
 		Object otemp = tos.getElemento();
+		Object tosAux = tos;
 		tos = tos.getProximo();
+		tosAux = null;
 		tam--;
 		return otemp;
 	}

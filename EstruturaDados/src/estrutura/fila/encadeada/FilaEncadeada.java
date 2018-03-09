@@ -55,7 +55,9 @@ public class FilaEncadeada implements Fila{
 			throw new EFilaVazia("Fila vazia");
 		}
 		Object out = i.getElemento();
+		Object iaux = i;
 		i = i.getProximo();
+		iaux = null;
 		tam--;
 		return out;
 	}
