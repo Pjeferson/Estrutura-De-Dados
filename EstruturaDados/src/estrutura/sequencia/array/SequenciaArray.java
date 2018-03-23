@@ -42,18 +42,17 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		No no = new No();
 		no.setElemento(o);
 		no.setIndice(r);
-		
-		No arrayAux[] = new No[size()+1];
+
+		No arrayAux[];
+		arrayAux = size() == array.length? new No[array.length+1]:new No[array.length];
 		int j;
 		for (j = 0; j < r; j++) {
-			arrayAux[j] = array[i++];
-			i %= array.length;
+			arrayAux[j] = array[j];
 		}
-		arrayAux[j] = no;
-		while(j < size()){
-			array[i].setIndice(i+1);
-			arrayAux[j++] = array[i++];
-			i %= array.length;
+		arrayAux[j++] = no;
+		for (; j < size()+1; j++) {
+			array[j-1].setIndice(j-1);
+			arrayAux[j] = array[j-1];
 		}
 		i=0;
 		f = j;
@@ -62,8 +61,24 @@ public class SequenciaArray implements SequenciaArrayInterface{
 
 	@Override
 	public Object removeAtRank(int r) throws EPosicaoInvalida {
-		// TODO Auto-generated method stub
-		return null;
+		if (r >= size() || r<0) {
+			throw new EPosicaoInvalida("Posição Inválida");
+		}
+		Object aux = array[i+r].getElemento(); 
+		No arrayAux[] = new No[size()-1];
+		int j;
+		for (j = 0; j < r; j++) {
+			arrayAux[j] = array[j];
+		}
+		j++;
+		for (; j < size(); j++) {
+			array[j].setIndice(j-1);
+			arrayAux[j-1] = array[j];
+		}
+		i=0;
+		f = j-1;
+		array = arrayAux;
+		return aux;
 	}
 
 	@Override
@@ -73,45 +88,81 @@ public class SequenciaArray implements SequenciaArrayInterface{
 
 	@Override
 	public No last() throws ESequenciaVazia {
-		return array[(f-1)%array.length];
+		return array[f-1];
 	}
 
 	@Override
 	public No before(No n) {
-		return array[(n.getIndice() -1)%array.length];
+		return array[n.getIndice() -1];
 	}
 
 	@Override
 	public No after(No n) {
-		return array[(i+n.getIndice() +1)%array.length];
+		return array[i+n.getIndice() +1];
 	}
 
 	@Override
 	public void replaceElement(No n, Object o) {
-		array[(i+n.getIndice())%array.length].setElemento(o);;
+		array[i+n.getIndice()].setElemento(o);;
 	}
 
 	@Override
 	public void swapElements(No n, No q) {
 		int indexN = n.getIndice();
 		int indexQ = q.getIndice();
-		
+
 		q.setIndice(indexN);
-		array[(i+indexN)%array.length] = q;
+		array[i+indexN] = q;
 		n.setIndice(indexQ);
-		array[(i+indexQ)%array.length] = n;
+		array[i+indexQ] = n;
 	}
 
 	@Override
 	public void insertBefore(No n, Object o) {
-		// TODO Auto-generated method stub
+		int index = n.getIndice();
 
+		No no = new No();
+		no.setElemento(o);
+		no.setIndice(index);
+
+		No arrayAux[];
+		arrayAux = size() == array.length? new No[array.length+1]:new No[array.length];
+		int j;
+		for (j = 0; j < index; j++) {
+			arrayAux[j] = array[j];
+		}
+		arrayAux[j++] = no;
+		for (; j < size()+1; j++) {
+			array[j-1].setIndice(j-1);
+			arrayAux[j] = array[j-1];
+		}
+		i=0;
+		f = j;
+		array = arrayAux;
 	}
 
 	@Override
 	public void insertAfter(No n, Object o) {
-		// TODO Auto-generated method stub
+		int index = n.getIndice()+1;
 
+		No no = new No();
+		no.setElemento(o);
+		no.setIndice(index);
+
+		No arrayAux[];
+		arrayAux = size() == array.length? new No[array.length+1]:new No[array.length];
+		int j;
+		for (j = 0; j < index; j++) {
+			arrayAux[j] = array[j];
+		}
+		arrayAux[j++] = no;
+		for (; j < size()+1; j++) {
+			array[j-1].setIndice(j-1);
+			arrayAux[j] = array[j-1];
+		}
+		i=0;
+		f = j;
+		array = arrayAux;
 	}
 
 	@Override
@@ -120,16 +171,15 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		No no = new No();
 		no.setElemento(o);
 		no.setIndice(0);
-		
+
 		No arrayAux[] = new No[array.length+soma];
 		arrayAux[0] = no;
 		int j;
 		for (j = 1; j < size()+1; j++) {
-			array[i].setIndice(i+1);
-			arrayAux[j] = array[i++];
-			i %= array.length;
+			array[j-1].setIndice(j);
+			arrayAux[j] = array[j-1];
 		}
-		
+
 		i=0;
 		f = j;
 		array = arrayAux;
@@ -137,7 +187,7 @@ public class SequenciaArray implements SequenciaArrayInterface{
 
 	@Override
 	public void insertLast(Object o) {
-		if(size() == array.length - 1){
+		if(size() == array.length){
 			No arrayAux[];
 			if (c < 0) {
 				arrayAux = new No[array.length *2];
@@ -146,8 +196,7 @@ public class SequenciaArray implements SequenciaArrayInterface{
 			}
 			int j;
 			for (j = 0; j < size(); j++) {
-				arrayAux[j] = array[i++];
-				i %= array.length;
+				arrayAux[j] = array[j];
 			}
 			i=0;
 			f = j;
@@ -156,10 +205,8 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		No no = new No();
 		no.setElemento(o);
 		no.setIndice(size()+1);
-		
+
 		array[f++] = no;
-		f %= array.length;
-		
 	}
 
 	@Override
@@ -168,17 +215,15 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		No arrayAux[] = new No[size()-1];
 		int j;
 		for (j = 0; j < index; j++) {
-			arrayAux[j] = array[i++];
-			i %= array.length;
+			arrayAux[j] = array[j];
 		}
 		j++;
-		while(j < size()){
-			array[i].setIndice(i-1);
-			arrayAux[j++] = array[i++];
-			i %= array.length;
+		for (; j < size(); j++) {
+			array[j].setIndice(j-1);
+			arrayAux[j-1] = array[j];
 		}
 		i=0;
-		f = j;
+		f = j-1;
 		array = arrayAux;
 	}
 
@@ -187,7 +232,7 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		if (r >= size() || r<0) {
 			throw new EPosicaoInvalida("Posição Inválida");
 		}
-		return array[(i+r)%array.length];
+		return array[i+r];
 	}
 
 	@Override
@@ -197,7 +242,7 @@ public class SequenciaArray implements SequenciaArrayInterface{
 
 	@Override
 	public int size() {
-		return (array.length -i+f)%array.length;
+		return i+f;
 	}
 
 	@Override
