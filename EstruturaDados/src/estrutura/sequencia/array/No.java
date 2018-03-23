@@ -1,8 +1,8 @@
-package estrutura.listaLigada;
+package estrutura.sequencia.array;
 
 public class No{
 	private Object elemento;
-	private No proximo;
+	private int indice;
 	
 	public Object getElemento() {
 		return elemento;
@@ -10,11 +10,11 @@ public class No{
 	public void setElemento(Object elemento) {
 		this.elemento = elemento;
 	}
-	public No getProximo() {
-		return proximo;
+	public int getIndice() {
+		return indice;
 	}
-	public void setProximo(No proximo) {
-		this.proximo = proximo;
+	public void setIndice(int indice) {
+		this.indice = indice;
 	}
-	
 }
+

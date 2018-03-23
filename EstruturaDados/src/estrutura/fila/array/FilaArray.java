@@ -49,8 +49,9 @@ public class FilaArray implements Fila {
 				qtemp = new Object[q.length+c];
 			}
 			int j;
-			for (j = 0; !estaVazia(); j++) {
-				qtemp[j] = desenfileirar();
+			for (j = 0; j < q.length-1; j++) {
+				qtemp[j] = q[i++];
+				i %= q.length;
 			}
 			i=0;
 			f = j;
