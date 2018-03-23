@@ -86,20 +86,7 @@ public class SequenciaEncadeada implements Sequencia{
 
 	@Override
 	public Object removeAtRank(int r) throws EPosicaoInvalida{
-		if (r >= size() || r<0) {
-			throw new EPosicaoInvalida("Posição Inválida");
-		}
-		No n;
-		if (r <= size()/2) {
-			n = header.getProximo();
-			for(int i=0; i < r; i++){
-				n = n.getProximo();
-			}
-		}else{
-			n = trailer.getAnterior();
-			for(int i=0; i < size()-r-1 ; i++)
-				n = n.getAnterior();
-		}
+		No n = atRank(r);
 		n.getAnterior().setProximo(n.getProximo());
 		n.getProximo().setAnterior(n.getAnterior());
 		Object aux = n.getElemento();

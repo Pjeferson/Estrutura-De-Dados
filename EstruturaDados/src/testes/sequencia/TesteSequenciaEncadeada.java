@@ -6,8 +6,8 @@ public class TesteSequenciaEncadeada {
 	public static void main(String[] args) {
 		SequenciaEncadeada sequencia = new SequenciaEncadeada();
 		
-		sequencia.insertFirst(1);
-		sequencia.insertAtRank(0, 2);
+		sequencia.insertFirst(10);
+		sequencia.insertAtRank(0, 20);
 		int teste = sequencia.size();
 		System.out.println("Tamanho: "+ teste);
 		System.out.println("==========");
