@@ -83,11 +83,17 @@ public class SequenciaArray implements SequenciaArrayInterface{
 
 	@Override
 	public No first() throws ESequenciaVazia {
+		if (isEmpty()) {
+			throw new ESequenciaVazia("Sequência Vazia");
+		}
 		return array[i];
 	}
 
 	@Override
 	public No last() throws ESequenciaVazia {
+		if (isEmpty()) {
+			throw new ESequenciaVazia("Sequência Vazia");
+		}
 		return array[f-1];
 	}
 
@@ -110,11 +116,12 @@ public class SequenciaArray implements SequenciaArrayInterface{
 	public void swapElements(No n, No q) {
 		int indexN = n.getIndice();
 		int indexQ = q.getIndice();
-
-		q.setIndice(indexN);
-		array[i+indexN] = q;
+		No aux = array[i+indexQ];
+		
 		n.setIndice(indexQ);
 		array[i+indexQ] = n;
+		aux.setIndice(indexN);
+		array[i+indexN] = aux;
 	}
 
 	@Override
@@ -204,7 +211,7 @@ public class SequenciaArray implements SequenciaArrayInterface{
 		}
 		No no = new No();
 		no.setElemento(o);
-		no.setIndice(size()+1);
+		no.setIndice(f);
 
 		array[f++] = no;
 	}

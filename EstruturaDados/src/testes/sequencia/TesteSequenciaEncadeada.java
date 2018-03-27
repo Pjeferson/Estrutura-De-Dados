@@ -8,6 +8,8 @@ public class TesteSequenciaEncadeada {
 		
 		sequencia.insertFirst(10);
 		sequencia.insertAtRank(0, 20);
+		sequencia.insertLast(21);
+		sequencia.swapElements(sequencia.atRank(2), sequencia.atRank(0));
 		int teste = sequencia.size();
 		System.out.println("Tamanho: "+ teste);
 		System.out.println("==========");

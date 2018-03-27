@@ -18,6 +18,7 @@ public class TesteSequenciaArray {
 		System.out.println(sequencia.before(sequencia.atRank(3)).getElemento());
 		System.out.println(sequencia.after(sequencia.atRank(3)).getElemento());
 		int teste = sequencia.size();
+		sequencia.swapElements(sequencia.first(), sequencia.last());
 		System.out.println("Tamanho: "+ sequencia.size());
 		System.out.println("==========");
 		for (int i = 0; i < teste; i++) {

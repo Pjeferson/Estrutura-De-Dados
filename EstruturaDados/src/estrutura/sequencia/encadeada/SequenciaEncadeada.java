@@ -6,7 +6,7 @@ import estrutura.sequencia.ESequenciaVazia;
 import estrutura.sequencia.Sequencia;
 
 public class SequenciaEncadeada implements Sequencia{
-	No header, trailer;
+	private No header, trailer;
 	int tam;
 
 	public SequenciaEncadeada() {
@@ -70,6 +70,7 @@ public class SequenciaEncadeada implements Sequencia{
 			for(int i=0; i < r; i++){
 				n = n.getProximo();
 			}
+			
 		}else{
 			n = trailer.getAnterior();
 			for(int i=0; i < size()-r-1 ; i++)
