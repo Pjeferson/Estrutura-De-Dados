@@ -6,7 +6,7 @@ import java.util.Vector;
 public class NoArvore implements Position {
 	private Object o;
 	private NoArvore pai;
-	private Vector<NoArvore> filhos = new Vector();
+	private Vector<NoArvore> filhos = new Vector<NoArvore>();
 	public NoArvore(NoArvore pai, Object o)
 	{
 		this.pai = pai;
@@ -36,7 +36,7 @@ public class NoArvore implements Position {
 	{
 		return filhos.size();
 	}
-	public Iterator children()
+	public Iterator<NoArvore> children()
 	{
 		return filhos.iterator();
 	}

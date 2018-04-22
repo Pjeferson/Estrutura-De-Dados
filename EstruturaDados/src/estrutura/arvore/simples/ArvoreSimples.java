@@ -3,15 +3,13 @@ package estrutura.arvore.simples;
 import java.util.Iterator;
 import java.util.Vector;
 
-import estrutura.arvore.ArvoreGenerica;
 import estrutura.arvore.InvalidPositionException;
 import estrutura.arvore.NoArvore;
 import estrutura.arvore.Position;
-public class ArvoreSimples {
-	//Atributos da árvore
+public class ArvoreSimples{
 	NoArvore raiz;
 	int tamanho;
-	//Construtor
+
 	public ArvoreSimples(Object o)
 	{
 		raiz = new NoArvore(null, o);
@@ -29,7 +27,7 @@ public class ArvoreSimples {
 		return (n.parent());
 	}
 	/** retorna os filhos de um nó */
-	public Iterator children(Position v)
+	public Iterator<NoArvore> children(Position v)
 	{
 		NoArvore n = (NoArvore) v;
 		return n.children();
@@ -62,7 +60,7 @@ public class ArvoreSimples {
 	}
 	/** Remove um nó
 	 *  Só pode remover nós externos e que tenham um pai (não seja raiz)
-	*/
+	 */
 	public Object remove(Position v) throws InvalidPositionException
 	{
 		NoArvore n = (NoArvore) v;
@@ -78,13 +76,11 @@ public class ArvoreSimples {
 	/** Troca dois elementos de posição */
 	public void swapElements(Position v, Position w)
 	{
-		/*Método que serve de exercício
-		 * Este método deverá fazer com que o objeto
-		 * que estava na posição v fique na posição w
-		 * e fazer com que o objeto que estava na posição w
-		 * fique na posição v
-		 */  
-		
+		NoArvore n1 = (NoArvore) v;
+		NoArvore n2 = (NoArvore) w;
+		Object backupN2 = n1.element();
+		n1.setElement(n2.element());
+		n2.setElement(backupN2);
 	}
 	/** Retorna a profundidade de um nó */
 	public int depth(Position v)
@@ -103,35 +99,58 @@ public class ArvoreSimples {
 	/** Retorna a altura da árvore */
 	public int height()
 	{
-		// Método que serve de exercício
-		int altura = 0;
-		return altura;
+		NoArvore raiz = (NoArvore)root();
+		return altura(raiz);
+	}
+	public int altura(NoArvore no){
+		if (isExternal(no)) {
+			return 0;
+		} else {
+			int altura = 0;
+			Iterator<NoArvore> filhos = no.children();
+			while (filhos.hasNext()) {
+				NoArvore filho = (NoArvore) filhos.next();
+				int alt2 = altura(filho);
+				altura = altura>=alt2?altura:alt2;
+			}
+			return altura+1;
+		}
 	}
 	/** Retorna um iterator com os elementos armazenados na árvore */
-	public Iterator elements()
+	public Iterator<Object> elements()
 	{
 		NoArvore n = raiz;
-		Vector<NoArvore> elementos = listar(n);
+		Vector<Object> elementos = listarElementos(n);
 		return elementos.iterator();
 	}
-	private Vector<NoArvore> listar(Position p){
-		Vector v = new Vector<>();
+	private Vector<Object> listarElementos(Position p){
+		Vector<Object> v = new Vector<>();
 		NoArvore n = (NoArvore) p;
-		Iterator filhos = n.children();
+		Iterator<NoArvore> filhos = n.children();
 		while (filhos.hasNext()) {
 			NoArvore filho = (NoArvore) filhos.next();
-			//System.out.println(filho.element());
-			/*Bug  no armazenamento*/
-			v = listar(filho);
+			v.addAll(listarElementos(filho));
 		}
 		v.add(n.element());
 		return v;
 	}
 	/** Retorna um iterator com as posições (nós) da árvore */
-	public Iterator positions()
+	public Iterator<NoArvore> positions()
 	{
-		// Método não implementados --- Coleguinha fique a vontade para fazê-los
-		return null;
+		NoArvore n = raiz;
+		Vector<NoArvore> positions = listarPositions(n);
+		return positions.iterator();
+	}
+	private Vector<NoArvore> listarPositions(Position p){
+		Vector<NoArvore> v = new Vector<>();
+		NoArvore n = (NoArvore) p;
+		Iterator<NoArvore> filhos = n.children();
+		while (filhos.hasNext()) {
+			NoArvore filho = (NoArvore) filhos.next();
+			v.addAll(listarPositions(filho));
+		}
+		v.add(n);
+		return v;
 	}
 	/** Retorna o número de nós da árvore
 	 */
@@ -145,9 +164,19 @@ public class ArvoreSimples {
 	{
 		return false;
 	}
+	/** Substitui elemento de um nó específico
+	 */
 	public Object replace(Position v, Object o)
 	{
-		// Método de exercício
-		return null;
+		NoArvore n1 = (NoArvore) v;
+		Object backupN1 = n1.element();
+		n1.setElement(o);
+		return backupN1;
+	}
+	
+	@Override
+	public String toString() {
+		/*Retorna um String com a representação gráfica da arvore*/
+		return super.toString();
 	}
 }
