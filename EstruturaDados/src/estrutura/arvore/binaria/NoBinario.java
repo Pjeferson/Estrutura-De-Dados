@@ -1,9 +1,23 @@
 package estrutura.arvore.binaria;
 
-public class NoBinario {
-	Object elemento;
-	NoBinario pai, filhoEsquerda, filhoDireita;
-	
+import estrutura.arvore.Position;
+
+public class NoBinario  implements Position, Comparable<NoBinario>{
+	private Object elemento;
+	private NoBinario pai, filhoEsquerda, filhoDireita;
+
+	public NoBinario()
+	{
+	}
+
+	public NoBinario(NoBinario pai, Object o)
+	{
+		this.elemento = o;
+		this.pai = pai;
+		this.filhoDireita = null;
+		this.filhoEsquerda = null;
+	}
+
 	public Object getElemento() {
 		return elemento;
 	}
@@ -27,5 +41,21 @@ public class NoBinario {
 	}
 	public void setFilhoDireita(NoBinario filhoDireita) {
 		this.filhoDireita = filhoDireita;
+	}
+
+	@Override
+	public Object element() {
+		return elemento;
+	}
+
+	@Override
+	public int compareTo(NoBinario n) {
+		if ((int)this.elemento < (int)n.elemento) {
+			return -1;
+		}
+		if ((int)this.elemento > (int)n.elemento) {
+			return 1;
+		}
+		return 0;
 	}
 }

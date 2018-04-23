@@ -1,51 +1,73 @@
 package estrutura.arvore.binaria;
 
 import java.util.Iterator;
+import java.util.Vector;
 
 import estrutura.arvore.Position;
 
 public class ArvoreBinaria implements ArvoreBinariaInterface{
+	private NoBinario raiz;
+	private int tamanho;
+
+	public ArvoreBinaria(Object o) {
+		this.raiz = new NoBinario(null, o);
+		this.tamanho = 0;
+	}
 
 	@Override
 	public Position leftChild(Position p) {
-		// TODO Auto-generated method stub
-		return null;
+		NoBinario no = (NoBinario)p; 
+		return no.getFilhoEsquerda();
 	}
 
 	@Override
 	public Position rightChild(Position p) {
-		// TODO Auto-generated method stub
-		return null;
+		NoBinario no = (NoBinario)p; 
+		return no.getFilhoDireita();
 	}
 
 	@Override
 	public boolean hasLeft(Position p) {
-		// TODO Auto-generated method stub
-		return false;
+		NoBinario no = (NoBinario)p;
+		return no.getFilhoEsquerda() != null;
 	}
 
 	@Override
 	public boolean hasRight(Position p) {
-		// TODO Auto-generated method stub
-		return false;
+		NoBinario no = (NoBinario)p; 
+		return no.getFilhoDireita() != null;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.tamanho;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public int height() {
-		// TODO Auto-generated method stub
-		return 0;
+		NoBinario raiz = root();
+		return altura(raiz);
+	}
+	public int altura(NoBinario v){
+		if (isExternal(v)) {
+			return 0;
+		} else {
+			int altura = 0;
+			Iterator<NoBinario> filhos = children(v);
+			while (filhos.hasNext()) {
+				NoBinario filho = filhos.next();
+				if (filho != null) {					
+					int alt2 = altura(filho);
+					altura = altura>=alt2?altura:alt2;
+				}
+			}
+			return altura+1;
+		}
 	}
 
 	@Override
@@ -62,50 +84,114 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 
 	@Override
 	public NoBinario root() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.raiz;
 	}
 
 	@Override
 	public NoBinario parent(NoBinario v) {
-		// TODO Auto-generated method stub
-		return null;
+		return v.getPai();
 	}
 
 	@Override
-	public Iterator children(NoBinario v) {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<NoBinario> children(NoBinario v) {
+		Vector<NoBinario> vector = new Vector<>();
+		vector.add(v.getFilhoEsquerda());
+		vector.add(v.getFilhoDireita());
+		return vector.iterator();
 	}
 
 	@Override
 	public boolean isInternal(NoBinario v) {
-		// TODO Auto-generated method stub
-		return false;
+		return (v.getFilhoEsquerda() != null || v.getFilhoDireita() != null);
 	}
 
 	@Override
 	public boolean isExternal(NoBinario v) {
-		// TODO Auto-generated method stub
-		return false;
+		return (v.getFilhoEsquerda() == null && v.getFilhoDireita() == null);
 	}
 
 	@Override
 	public boolean isRoot(NoBinario v) {
-		// TODO Auto-generated method stub
-		return false;
+		return v == this.raiz;
 	}
 
 	@Override
 	public int depth(NoBinario v) {
-		// TODO Auto-generated method stub
-		return 0;
+		return profundidade(v);
 	}
 
+	private int profundidade(NoBinario v) {
+		if (v == this.raiz)
+			return 0;
+		else
+			return 1 + profundidade(v.getPai());
+	}
 	@Override
 	public Object replace(NoBinario v, Object o) {
-		// TODO Auto-generated method stub
-		return null;
+		Object backup = v.element();
+		v.setElemento(o);
+		return backup;
 	}
 	
+	/*pesquisa*/
+	public NoBinario find(Object o){
+		NoBinario n = new NoBinario(null, o);
+		return achar(this.raiz,n);
+	}
+	private NoBinario achar(NoBinario noAtual, NoBinario n){
+		if(n.compareTo(noAtual) < 0){
+			if (hasLeft(noAtual)) {
+				noAtual = (NoBinario)leftChild(noAtual);
+				return achar(noAtual, n);
+			} else {
+				return null;
+			}
+		}
+		if(n.compareTo(noAtual) > 0){
+			if (hasRight(noAtual)) {
+				noAtual = (NoBinario)rightChild(noAtual);
+				return achar(noAtual, n);
+			} else {
+				return null;
+			}
+		}
+		return noAtual;
+	}
+	public void insert(Object o){
+		NoBinario n = new NoBinario(null, o);
+		inserir(this.raiz, n);
+	}
+	private void inserir(NoBinario noAtual, NoBinario n){
+		if(n.compareTo(noAtual) <= 0){
+			if (hasLeft(noAtual)) {
+				noAtual = (NoBinario)leftChild(noAtual);
+				inserir(noAtual, n);
+			} else {
+				noAtual.setFilhoEsquerda(n);
+				n.setPai(noAtual);
+				this.tamanho++;
+			}
+		} else {
+			if (hasRight(noAtual)) {
+				noAtual = (NoBinario)rightChild(noAtual);
+				inserir(noAtual, n);
+			} else {
+				noAtual.setFilhoDireita(n);
+				n.setPai(noAtual);
+				this.tamanho++;
+			}
+		}
+	}
+	public NoBinario remove(Object o){
+		NoBinario n = find(o);
+		//TODO operar sobre nó n para completar sua remoção
+		return n;
+	};
+	/*fim da parte de pesquisa*/
+	
+	@Override
+	public String toString() {
+		//TODO Retornar um String com a representação gráfica da arvore
+		return super.toString();
+	}
 }

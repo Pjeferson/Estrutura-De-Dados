@@ -176,7 +176,7 @@ public class ArvoreSimples{
 	
 	@Override
 	public String toString() {
-		/*Retorna um String com a representação gráfica da arvore*/
+		//TODO Retornar um String com a representação gráfica da arvore
 		return super.toString();
 	}
 }
