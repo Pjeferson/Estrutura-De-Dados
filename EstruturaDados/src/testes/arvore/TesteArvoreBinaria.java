@@ -2,6 +2,7 @@ package testes.arvore;
 
 import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Vector;
 
 import estrutura.arvore.InvalidPositionException;
 import estrutura.arvore.binaria.ArvoreBinaria;
@@ -24,16 +25,19 @@ public class TesteArvoreBinaria {
 				System.out.println("não encontrado");
 			}
 		}*/
-		try {
-			if(arvore.remove(16) == null){
-				System.err.println("falhou");
-			}
-		} catch (InvalidPositionException e) {
-			e.printStackTrace();
+
+		if(arvore.remove(16) == null){
+			System.err.println("falhou");
 		}
+
 		Iterator<Object> ite = arvore.elements();
 		while(ite.hasNext()){
 			System.out.println(ite.next() + " ");
+		}
+		System.out.println("\n#####");
+		Iterator<NoBinario> iteBi = arvore.nos();
+		while(iteBi.hasNext()){
+			System.out.println(iteBi.next().element() + " ");
 		}
 		System.out.println("\n#####");
 		System.out.println("Tamanho: "+arvore.size());

@@ -4,16 +4,19 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import estrutura.arvore.InvalidPositionException;
-import estrutura.arvore.NoArvore;
 import estrutura.arvore.Position;
 
 public class ArvoreBinaria implements ArvoreBinariaInterface{
 	private NoBinario raiz;
 	private int tamanho;
 
+	public ArvoreBinaria() {
+		this.raiz = null;
+		this.tamanho = 0;
+	}
 	public ArvoreBinaria(Object o) {
 		this.raiz = new NoBinario(null, o);
-		this.tamanho = 0;
+		this.tamanho = 1;
 	}
 
 	@Override
@@ -47,13 +50,12 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 
 	@Override
 	public boolean isEmpty() {
-		return false;
+		return this.raiz == null;
 	}
 
 	@Override
 	public int height() {
-		NoBinario raiz = root();
-		return altura(raiz);
+		return this.raiz == null?0:altura(this.raiz);
 	}
 	public int altura(NoBinario v){
 		if (isExternal(v)) {
@@ -74,9 +76,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 
 	@Override
 	public Iterator<Object> elements() {
-		NoBinario n = this.raiz;
-		Vector<Object> elementos = listarElementos(n);
-		return elementos.iterator();
+		return this.raiz == null?null:listarElementos(this.raiz).iterator();
 	}
 	private Vector<Object> listarElementos(Position p){
 		Vector<Object> v = new Vector<>();
@@ -90,11 +90,20 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 		return v;
 	}
 	@Override
-	public Iterator nos() {
-		// TODO método baseado em elements. Retornando iterador de nós
-		return null;
+	public Iterator<NoBinario> nos() {
+		return this.raiz == null?null:listarNos(this.raiz).iterator();
 	}
-
+	private Vector<NoBinario> listarNos(Position p){
+		Vector<NoBinario> v = new Vector<>();
+		NoBinario n = (NoBinario) p;
+		Iterator<NoBinario> filhos = children(n);
+		while (filhos.hasNext()) {
+			NoBinario filho = (NoBinario) filhos.next();
+			v.addAll(listarNos(filho));
+		}
+		v.add(n);
+		return v;
+	}
 	@Override
 	public NoBinario root() {
 		return this.raiz;
@@ -104,7 +113,9 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	public NoBinario parent(NoBinario v) {
 		return v.getPai();
 	}
-
+	public boolean hasParent(NoBinario v) {
+		return v.getPai()!=null;
+	}
 	@Override
 	public Iterator<NoBinario> children(NoBinario v) {
 		Vector<NoBinario> vector = new Vector<>();
@@ -153,7 +164,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	/*pesquisa*/
 	public NoBinario find(Object o){
 		NoBinario n = new NoBinario(null, o);
-		return achar(this.raiz,n);
+		return this.raiz == null?null:achar(this.raiz,n);
 	}
 	private NoBinario achar(NoBinario noAtual, NoBinario n){
 		if(n.compareTo(noAtual) < 0){
@@ -176,7 +187,11 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	}
 	public void insert(Object o){
 		NoBinario n = new NoBinario(null, o);
-		inserir(this.raiz, n);
+		if (this.raiz == null) {
+			this.raiz = n;
+		} else {
+			inserir(this.raiz, n);
+		}
 	}
 	private void inserir(NoBinario noAtual, NoBinario n){
 		if(n.compareTo(noAtual) <= 0){
@@ -199,14 +214,11 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 			}
 		}
 	}
-	public NoBinario remove(Object o) throws InvalidPositionException{
+	public NoBinario remove(Object o){
 		NoBinario n = find(o);
 		return remover(n, o);
 	}
-	public NoBinario remover(NoBinario n, Object o) throws InvalidPositionException{
-		if (isRoot(n)) {
-			throw new InvalidPositionException("Não é possível remover a raiz");
-		}
+	public NoBinario remover(NoBinario n, Object o){
 		if (n != null) {
 			/*folha*/
 			if (isExternal(n)) {
@@ -215,6 +227,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 				} else {
 					n.getPai().setFilhoDireita(null);
 				}
+				this.tamanho--;
 				return n;
 			}
 			/*um nó*/
@@ -226,6 +239,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 					n.getPai().setFilhoDireita(n.getFilhoEsquerda());
 					n.getFilhoEsquerda().setPai(n.getPai());
 				}
+				this.tamanho--;
 				return n;
 			}
 			if (n.getFilhoEsquerda() == null && n.getFilhoDireita() != null) {
@@ -236,6 +250,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 					n.getPai().setFilhoDireita(n.getFilhoDireita());
 					n.getFilhoDireita().setPai(n.getPai());
 				}
+				this.tamanho--;
 				return n;
 			}
 			/*dois nós*/
@@ -246,6 +261,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 			Object valorBackup = andaEsq.element();
 			remover(andaEsq, valorBackup);
 			n.setElemento(valorBackup);
+			this.tamanho--;
 			return n;
 		}
 		return null;
