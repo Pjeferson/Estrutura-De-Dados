@@ -3,6 +3,8 @@ package estrutura.arvore.binaria;
 import java.util.Iterator;
 import java.util.Vector;
 
+import estrutura.arvore.InvalidPositionException;
+import estrutura.arvore.NoArvore;
 import estrutura.arvore.Position;
 
 public class ArvoreBinaria implements ArvoreBinariaInterface{
@@ -71,14 +73,25 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	}
 
 	@Override
-	public Iterator elements() {
-		// TODO Auto-generated method stub
-		return null;
+	public Iterator<Object> elements() {
+		NoBinario n = this.raiz;
+		Vector<Object> elementos = listarElementos(n);
+		return elementos.iterator();
 	}
-
+	private Vector<Object> listarElementos(Position p){
+		Vector<Object> v = new Vector<>();
+		NoBinario n = (NoBinario) p;
+		Iterator<NoBinario> filhos = children(n);
+		while (filhos.hasNext()) {
+			NoBinario filho = (NoBinario) filhos.next();
+			v.addAll(listarElementos(filho));
+		}
+		v.add(n.element());
+		return v;
+	}
 	@Override
 	public Iterator nos() {
-		// TODO Auto-generated method stub
+		// TODO método baseado em elements. Retornando iterador de nós
 		return null;
 	}
 
@@ -95,8 +108,12 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	@Override
 	public Iterator<NoBinario> children(NoBinario v) {
 		Vector<NoBinario> vector = new Vector<>();
-		vector.add(v.getFilhoEsquerda());
-		vector.add(v.getFilhoDireita());
+		if(v.getFilhoEsquerda()!=null){
+			vector.add(v.getFilhoEsquerda());
+		}
+		if(v.getFilhoDireita()!=null){
+			vector.add(v.getFilhoDireita());
+		}
 		return vector.iterator();
 	}
 
@@ -132,7 +149,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 		v.setElemento(o);
 		return backup;
 	}
-	
+
 	/*pesquisa*/
 	public NoBinario find(Object o){
 		NoBinario n = new NoBinario(null, o);
@@ -182,13 +199,59 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 			}
 		}
 	}
-	public NoBinario remove(Object o){
+	public NoBinario remove(Object o) throws InvalidPositionException{
 		NoBinario n = find(o);
-		//TODO operar sobre nó n para completar sua remoção
-		return n;
-	};
+		return remover(n, o);
+	}
+	public NoBinario remover(NoBinario n, Object o) throws InvalidPositionException{
+		if (isRoot(n)) {
+			throw new InvalidPositionException("Não é possível remover a raiz");
+		}
+		if (n != null) {
+			/*folha*/
+			if (isExternal(n)) {
+				if (n.compareTo(n.getPai()) <= 0) {
+					n.getPai().setFilhoEsquerda(null);
+				} else {
+					n.getPai().setFilhoDireita(null);
+				}
+				return n;
+			}
+			/*um nó*/
+			if (n.getFilhoEsquerda() != null && n.getFilhoDireita() == null) {
+				if (n.compareTo(n.getPai()) <= 0) {
+					n.getPai().setFilhoEsquerda(n.getFilhoEsquerda());
+					n.getFilhoEsquerda().setPai(n.getPai());
+				} else {
+					n.getPai().setFilhoDireita(n.getFilhoEsquerda());
+					n.getFilhoEsquerda().setPai(n.getPai());
+				}
+				return n;
+			}
+			if (n.getFilhoEsquerda() == null && n.getFilhoDireita() != null) {
+				if (n.compareTo(n.getPai()) <= 0) {
+					n.getPai().setFilhoEsquerda(n.getFilhoDireita());
+					n.getFilhoDireita().setPai(n.getPai());
+				} else {
+					n.getPai().setFilhoDireita(n.getFilhoDireita());
+					n.getFilhoDireita().setPai(n.getPai());
+				}
+				return n;
+			}
+			/*dois nós*/
+			NoBinario andaEsq = n.getFilhoDireita();
+			while (andaEsq.getFilhoEsquerda() != null) {
+				andaEsq = andaEsq.getFilhoEsquerda();
+			}
+			Object valorBackup = andaEsq.element();
+			remover(andaEsq, valorBackup);
+			n.setElemento(valorBackup);
+			return n;
+		}
+		return null;
+	}
 	/*fim da parte de pesquisa*/
-	
+
 	@Override
 	public String toString() {
 		//TODO Retornar um String com a representação gráfica da arvore
