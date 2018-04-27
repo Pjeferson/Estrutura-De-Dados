@@ -11,36 +11,19 @@ import estrutura.arvore.binaria.NoBinario;
 public class TesteArvoreBinaria {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
-		ArvoreBinaria arvore = new ArvoreBinaria(16);
+		ArvoreBinaria arvore = new ArvoreBinaria(15);
 		arvore.insert(10);
 		arvore.insert(20);
 		arvore.insert(6);
 		arvore.insert(12);
-		/*String txt;
-		while(!(txt = sc.next()).equals(".")){
-			int in = Integer.parseInt(txt);
-			if (arvore.find(in) != null) {
-				System.out.println("encontrado");
-			} else {
-				System.out.println("não encontrado");
-			}
-		}*/
-
-		if(arvore.remove(16) == null){
-			System.err.println("falhou");
-		}
-
-		Iterator<Object> ite = arvore.elements();
-		while(ite.hasNext()){
-			System.out.println(ite.next() + " ");
-		}
-		System.out.println("\n#####");
+		//arvore.remove(16);
 		Iterator<NoBinario> iteBi = arvore.nos();
 		while(iteBi.hasNext()){
-			System.out.println(iteBi.next().element() + " ");
+			System.out.print(iteBi.next().element() + " ");
 		}
 		System.out.println("\n#####");
 		System.out.println("Tamanho: "+arvore.size());
 		System.out.println("Altura: "+arvore.height());
+		arvore.mostrar();
 	}
 }

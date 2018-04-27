@@ -1,5 +1,6 @@
 package estrutura.arvore.binaria;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -268,9 +269,28 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 	}
 	/*fim da parte de pesquisa*/
 
-	@Override
-	public String toString() {
-		//TODO Retornar um String com a representação gráfica da arvore
-		return super.toString();
+	public void mostrar() {
+		ArrayList<StringBuffer> a = new ArrayList<>();
+		for (int i = 0; i < this.tamanho; i++) {
+			a.add(new StringBuffer());
+		}
+		mostrarRecursao(this.raiz, 0, a);
+		for (int i = 0; i < this.tamanho; i++) {
+			System.out.println(a.get(i));
+		}
+	}
+	private void mostrarRecursao(NoBinario n, int espacos, ArrayList<StringBuffer> a) {
+		if(n == null){
+			return;
+		}
+		mostrarRecursao(n.getFilhoEsquerda(), espacos+1, a);
+		for (int i = 0; i < this.tamanho; ++i){
+			if(i == espacos){
+				a.get(i).append(n.element());
+			} else {
+				a.get(i).append("   ");
+			}
+		}
+		mostrarRecursao(n.getFilhoDireita(), espacos+1, a);
 	}
 }
