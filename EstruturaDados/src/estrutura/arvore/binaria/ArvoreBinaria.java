@@ -1,6 +1,7 @@
 package estrutura.arvore.binaria;
 
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -278,6 +279,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 		mostrarRecursao(this.raiz, 0, a);
 		for (int i = 0; i < altura; i++) {
 			System.out.println(a.get(i));
+			
 		}
 	}
 	private void mostrarRecursao(NoBinario n, int profundidade, ArrayList<StringBuffer> a) {
@@ -287,7 +289,7 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 		mostrarRecursao(n.getFilhoEsquerda(), profundidade+1, a);
 		for (int i = 0; i < height()+1; ++i){
 			if(i == profundidade){
-				a.get(i).append(n.element());
+				a.get(i).append( n.element());
 			} else {
 				a.get(i).append("   ");
 			}

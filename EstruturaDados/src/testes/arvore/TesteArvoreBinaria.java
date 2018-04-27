@@ -16,7 +16,15 @@ public class TesteArvoreBinaria {
 		arvore.insert(20);
 		arvore.insert(6);
 		arvore.insert(12);
-		//arvore.remove(16);
+		arvore.insert(30);
+		arvore.insert(52);
+		arvore.insert(42);
+		arvore.insert(02);
+		arvore.insert(18);
+		arvore.insert(22);
+		arvore.insert(8);
+		arvore.insert(19);
+		arvore.remove(15);
 		Iterator<NoBinario> iteBi = arvore.nos();
 		while(iteBi.hasNext()){
 			System.out.print(iteBi.next().element() + " ");
