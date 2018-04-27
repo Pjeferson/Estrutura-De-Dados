@@ -271,26 +271,27 @@ public class ArvoreBinaria implements ArvoreBinariaInterface{
 
 	public void mostrar() {
 		ArrayList<StringBuffer> a = new ArrayList<>();
-		for (int i = 0; i < this.tamanho; i++) {
+		int altura = height()+1;
+		for (int i = 0; i < altura; i++) {
 			a.add(new StringBuffer());
 		}
 		mostrarRecursao(this.raiz, 0, a);
-		for (int i = 0; i < this.tamanho; i++) {
+		for (int i = 0; i < altura; i++) {
 			System.out.println(a.get(i));
 		}
 	}
-	private void mostrarRecursao(NoBinario n, int espacos, ArrayList<StringBuffer> a) {
+	private void mostrarRecursao(NoBinario n, int profundidade, ArrayList<StringBuffer> a) {
 		if(n == null){
 			return;
 		}
-		mostrarRecursao(n.getFilhoEsquerda(), espacos+1, a);
-		for (int i = 0; i < this.tamanho; ++i){
-			if(i == espacos){
+		mostrarRecursao(n.getFilhoEsquerda(), profundidade+1, a);
+		for (int i = 0; i < height()+1; ++i){
+			if(i == profundidade){
 				a.get(i).append(n.element());
 			} else {
 				a.get(i).append("   ");
 			}
 		}
-		mostrarRecursao(n.getFilhoDireita(), espacos+1, a);
+		mostrarRecursao(n.getFilhoDireita(), profundidade+1, a);
 	}
 }
