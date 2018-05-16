@@ -13,8 +13,8 @@ import java.util.Vector;
  */
 public interface HashTableInterface {
     public Object findElement(int key);
-    public void insertItem(int key, Object element) throws InvalidPositionException;
-    public Object removeElement(int k);
+    public void insertItem(int key, Object element) throws HashTableCheiaException;
+    public Object removeElement(int key);
     public int size();
     public boolean isEmpty();
     public Vector<Integer> keys();
