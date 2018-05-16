@@ -11,7 +11,7 @@ import java.util.Vector;
  *
  * @author pjeferson
  */
-public interface HashTable {
+public interface HashTableInterface {
     public Object findElement(int key);
     public void insertItem(int key, Object element) throws InvalidPositionException;
     public Object removeElement(int k);

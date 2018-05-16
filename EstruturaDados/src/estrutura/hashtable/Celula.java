@@ -12,6 +12,15 @@ package estrutura.hashtable;
 public class Celula {
     private int key;
     private Object element;
+    private boolean available;
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 
     public int getKey() {
         return key;
