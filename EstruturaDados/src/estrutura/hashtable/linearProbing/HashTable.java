@@ -48,8 +48,8 @@ public class HashTable implements HashTableInterface {
         for (int p = 0; p < array.length; p++) {
             Celula celula = array[i];
             if (celula != null) {
-                if (!celula.isAvailable() && key == array[i].getKey()) {
-                    return array[i].getElement();
+                if (!celula.isAvailable() && key == celula.getKey()) {
+                    return celula.getElement();
                 } else {
                     i = (i + 1) % array.length;
                 }
@@ -86,10 +86,10 @@ public class HashTable implements HashTableInterface {
         for (int p = 0; p < array.length; p++) {
             Celula celula = array[i];
             if (celula != null) {
-                if (!celula.isAvailable() && key == array[i].getKey()) {
-                    array[i].setAvailable(true);
+                if (!celula.isAvailable() && key == celula.getKey()) {
+                    celula.setAvailable(true);
                     this.size--;
-                    return array[i].getElement();
+                    return celula.getElement();
                 } else {
                     i = (i + 1) % array.length;
                 }
