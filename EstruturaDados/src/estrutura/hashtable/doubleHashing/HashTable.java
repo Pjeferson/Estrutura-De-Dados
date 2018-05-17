@@ -24,7 +24,8 @@ public class HashTable implements HashTableInterface {
     public HashTable(int capacity) {
         array = new Celula[capacity];
         size = 0;
-        primo = getPrimario(capacity);
+        primo = 7;
+        //primo = getPrimario(capacity);
     }
 
     public void mostrar() {
@@ -43,7 +44,7 @@ public class HashTable implements HashTableInterface {
     private int h(int key) {
         return key % this.array.length;
     }
-    
+
     private int d(int key) {
         return primo - (key % primo);
     }
@@ -56,13 +57,30 @@ public class HashTable implements HashTableInterface {
 
     @Override
     public void insertItem(int key, Object element) throws HashTableCheiaException {
-        /*TODO aplicar formula ( i + jd ( k )) mod N*/
+        if (this.size >= array.length) {
+            throw new HashTableCheiaException("A tabela está cheia");
+        }
+        Celula celula = new Celula();
+        celula.setElement(element);
+        celula.setKey(key);
+        celula.setAvailable(false);
+        int i = h(key);
+        int d = d(key);
+        for (int j = 0; j < array.length; j++) {
+            int probe = (i + j*d) % array.length;
+            if (array[probe] == null || array[probe].isAvailable()) {
+                array[probe] = celula;
+                this.size++;
+                return;
+            }
+        }
+        /*formula ( i + jd ( k )) mod N*/
     }
 
     @Override
     public Object removeElement(int key) {
-       /*TODO aplicar formula ( i + jd ( k )) mod N*/
-       return null;
+        /*TODO aplicar formula ( i + jd ( k )) mod N*/
+        return null;
     }
 
     @Override
