@@ -24,8 +24,8 @@ public class HashTable implements HashTableInterface {
     public HashTable(int capacity) {
         array = new Celula[capacity];
         size = 0;
-        primo = 7;
-        //primo = getPrimo(capacity);
+        primo = getPrimo(capacity);
+        //primo = 7;
     }
 
     public void mostrar() {
@@ -145,9 +145,21 @@ public class HashTable implements HashTableInterface {
         return lista.iterator();
     }
 
+    /*pega maior primo anterior a 'capacity'*/
     private int getPrimo(int capacity) {
-        /*TODO pegar maior primário anterior a 'capacity'*/
-        return 0;
+        for (int i = capacity - 1; i > 1; i--) {
+            boolean teste = true;
+            for (int j = 2; j <= Math.sqrt(i); j++) {
+                if (i % j == 0) {
+                    teste = false;
+                    break;
+                }
+            }
+            if (teste) {
+                return i;
+            }
+        }
+        return 1;
     }
 
 }
