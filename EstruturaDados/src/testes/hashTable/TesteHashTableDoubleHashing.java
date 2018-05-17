@@ -15,6 +15,7 @@ public class TesteHashTableDoubleHashing {
 
     public static void main(String[] args) {
         HashTable table = new HashTable(13);
+        /*--Inserção e teste--*/
         table.insertItem(18, "18");
         table.insertItem(41, "41");
         table.insertItem(22, "22");
@@ -25,5 +26,20 @@ public class TesteHashTableDoubleHashing {
         table.insertItem(73, "73");
         System.out.println(table.size());
         table.mostrar();
+        /*----*/
+        /*--Remoção, reinserção e teste de tamanho--*/
+        table.removeElement(18);
+        table.removeElement(44);
+        table.removeElement(31);
+        table.insertItem(18, "18");
+        table.insertItem(44, "44");
+        table.insertItem(31, "31");
+        System.out.println(table.size());
+        table.mostrar();
+        /*----*/
+        /*--Verificando o método findElement--*/
+        System.out.println(table.findElement(31));
+        System.out.println(table.findElement(66));
+        /*----*/
     }
 }

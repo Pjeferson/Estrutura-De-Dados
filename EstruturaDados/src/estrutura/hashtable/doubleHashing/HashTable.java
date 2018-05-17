@@ -25,7 +25,7 @@ public class HashTable implements HashTableInterface {
         array = new Celula[capacity];
         size = 0;
         primo = 7;
-        //primo = getPrimario(capacity);
+        //primo = getPrimo(capacity);
     }
 
     public void mostrar() {
@@ -51,8 +51,21 @@ public class HashTable implements HashTableInterface {
 
     @Override
     public Object findElement(int key) {
-        /*TODO aplicar formula ( i + jd ( k )) mod N*/
+        int i = h(key);
+        int d = d(key);
+        for (int j = 0; j < array.length; j++) {
+            int probe = (i + j * d) % array.length;
+            Celula celula = array[probe];
+            if (celula != null) {
+                if (!celula.isAvailable() && key == celula.getKey()) {
+                    return celula.getElement();
+                }
+            } else {
+                return null;
+            }
+        }
         return null;
+        /*formula ( i + jd ( k )) mod N*/
     }
 
     @Override
@@ -67,7 +80,7 @@ public class HashTable implements HashTableInterface {
         int i = h(key);
         int d = d(key);
         for (int j = 0; j < array.length; j++) {
-            int probe = (i + j*d) % array.length;
+            int probe = (i + j * d) % array.length;
             if (array[probe] == null || array[probe].isAvailable()) {
                 array[probe] = celula;
                 this.size++;
@@ -79,8 +92,23 @@ public class HashTable implements HashTableInterface {
 
     @Override
     public Object removeElement(int key) {
-        /*TODO aplicar formula ( i + jd ( k )) mod N*/
+        int i = h(key);
+        int d = d(key);
+        for (int j = 0; j < array.length; j++) {
+            int probe = (i + j * d) % array.length;
+            Celula celula = array[probe];
+            if (celula != null) {
+                if (!celula.isAvailable() && key == celula.getKey()) {
+                    celula.setAvailable(true);
+                    this.size--;
+                    return celula.getElement();
+                }
+            } else {
+                return null;
+            }
+        }
         return null;
+        /*formula ( i + jd ( k )) mod N*/
     }
 
     @Override
@@ -117,7 +145,7 @@ public class HashTable implements HashTableInterface {
         return lista.iterator();
     }
 
-    private int getPrimario(int capacity) {
+    private int getPrimo(int capacity) {
         /*TODO pegar maior primário anterior a 'capacity'*/
         return 0;
     }
