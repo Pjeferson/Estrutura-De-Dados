@@ -5,7 +5,7 @@
  */
 package estrutura.hashtable;
 
-import java.util.Vector;
+import java.util.Iterator;
 
 /**
  *
@@ -17,6 +17,6 @@ public interface HashTableInterface {
     public Object removeElement(int key);
     public int size();
     public boolean isEmpty();
-    public Vector<Integer> keys();
-    public Vector<Object> Elements();
+    public Iterator<Integer> keys();
+    public Iterator<Object> elements();
 }

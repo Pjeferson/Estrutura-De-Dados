@@ -6,12 +6,13 @@
 package testes.hashTable;
 
 import estrutura.hashtable.linearProbing.HashTable;
+import java.util.Iterator;
 
 /**
  *
  * @author 20171014040010
  */
-public class TesteHashTable {
+public class TesteHashTableLinearProbing {
 
     public static void main(String[] args) {
         HashTable table = new HashTable(10);
@@ -25,16 +26,11 @@ public class TesteHashTable {
         table.mostrar();
         
         table.removeElement(5);
-        table.removeElement(15);
-        table.insertItem(25, "25");
-        
-        System.out.println(table.removeElement(4));
         System.out.println(table.size());
         table.mostrar();
-        
-        System.out.println(table.findElement(5));
-        System.out.println(table.findElement(25));
-        
-        table.mostrar();
+        Iterator<Integer> listaKeys = table.keys();
+        while (listaKeys.hasNext()) {            
+            System.out.println(listaKeys.next());
+        }
     }
 }

@@ -8,6 +8,7 @@ package estrutura.hashtable.linearProbing;
 import estrutura.hashtable.Celula;
 import estrutura.hashtable.HashTableInterface;
 import estrutura.hashtable.HashTableCheiaException;
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -47,7 +48,7 @@ public class HashTable implements HashTableInterface {
         for (int p = 0; p < array.length; p++) {
             Celula celula = array[i];
             if (celula != null) {
-                if (!celula.isAvailable() && key == array[i].getKey()) {   
+                if (!celula.isAvailable() && key == array[i].getKey()) {
                     return array[i].getElement();
                 } else {
                     i = (i + 1) % array.length;
@@ -110,15 +111,27 @@ public class HashTable implements HashTableInterface {
     }
 
     @Override
-    public Vector<Integer> keys() {
-        /*TODO Vector com as chaves*/
-        return null;
+    public Iterator<Integer> keys() {
+        Vector<Integer> lista = new Vector();
+        for (int i = 0; i < array.length; i++) {
+            Celula celula = array[i];
+            if (celula != null && !celula.isAvailable()) {
+                lista.add(celula.getKey());
+            }
+        }
+        return lista.iterator();
     }
 
     @Override
-    public Vector<Object> Elements() {
-         /*TODO Vector com os elementos*/
-         return null;
+    public Iterator<Object> elements() {
+        Vector<Object> lista = new Vector();
+        for (int i = 0; i < array.length; i++) {
+            Celula celula = array[i];
+            if (celula != null && !celula.isAvailable()) {
+                lista.add(celula.getElement());
+            }
+        }
+        return lista.iterator();
     }
 
 }
