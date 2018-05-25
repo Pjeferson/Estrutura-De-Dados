@@ -11,7 +11,7 @@ package estrutura.heap;
  */
 public class TesteArrayCelula {
 
-    /*Testando implementação para método replace da Heap*/
+    /*Testando implementação para método swap da Heap*/
     public static void main(String[] args) {
         Celula[] cel = new Celula[2];
         
