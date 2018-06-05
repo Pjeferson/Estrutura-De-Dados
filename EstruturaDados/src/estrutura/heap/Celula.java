@@ -9,7 +9,7 @@ package estrutura.heap;
  *
  * @author pjeferson
  */
-public class Celula {
+public class Celula implements Comparable<Celula>{
     private int key;
     private Object element;
 
@@ -27,6 +27,17 @@ public class Celula {
 
     public void setElement(Object element) {
         this.element = element;
+    }
+
+    @Override
+    public int compareTo(Celula o) {
+        if(this.key < o.key){
+            return -1;
+        } else if (this.key > o.key){
+            return 1;
+        } else {
+            return 0;
+        }
     }
     
     
